@@ -1,10 +1,20 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { Container, Loader } from "rsuite";
+import { useProfile } from "../context/profile.context";
 
 const PublicRoute = ({ children }) => {
-  const profile = false;
+  const { profile, isLoading } = useProfile();
 
-  if (profile) {
+  if (isLoading && !profile) {
+    return (
+      <Container>
+        <Loader center vertical size="md" speed="slow" />
+      </Container>
+    );
+  }
+
+  if (profile && !isLoading) {
     return <Navigate to={"/"} />;
   }
 
