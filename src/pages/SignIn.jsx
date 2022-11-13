@@ -18,7 +18,7 @@ import {
   toaster,
 } from "rsuite";
 import { ref, serverTimestamp, set } from "firebase/database";
-import { auth, database } from "../misc/firebase.config";
+import { auth, database } from "../misc/firebase.config.js";
 
 const SignIn = () => {
   const signInWithProvider = async (provider) => {
@@ -27,7 +27,7 @@ const SignIn = () => {
       const userMeta = getAdditionalUserInfo(credential);
 
       if (userMeta.isNewUser) {
-        await set(ref(database, `/users/${credential.user.uid}`), {
+        await set(ref(database, "users/" + credential.user.uid), {
           name: credential.user.displayName,
           createdAt: serverTimestamp(),
         });

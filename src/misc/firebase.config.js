@@ -9,6 +9,8 @@ const config = {
   storageBucket: "chat-app-15798.appspot.com",
   messagingSenderId: "159523893460",
   appId: "1:159523893460:web:068a680501040583488b41",
+  databaseURL:
+    "https://chat-app-15798-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 const app = initializeApp(config);
