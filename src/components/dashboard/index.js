@@ -1,13 +1,37 @@
+import { ref, update } from "firebase/database";
 import React from "react";
-import { Button, Divider, Drawer } from "rsuite";
+import { Button, Divider, Drawer, Message, toaster } from "rsuite";
 import { useProfile } from "../../context/profile.context";
+import { database } from "../../misc/firebase.config";
+import { getUserUpdates } from "../../misc/helpers";
 import EditableInput from "../EditableInput";
 
 const Dashboard = ({ onSignOut }) => {
   const { profile } = useProfile();
 
   const onSave = async (newData) => {
-    console.log(newData)
+    try {
+      const updates = await getUserUpdates(
+        profile.uid,
+        "name",
+        newData,
+        database
+      );
+
+      await update(ref(database), updates);
+
+      toaster.push(
+        <Message type="success" closable duration={4000}>
+          Nickname has been updated
+        </Message>
+      );
+    } catch (error) {
+      toaster.push(
+        <Message type="error" closable duration={4000}>
+          {error.message}
+        </Message>
+      );
+    }
   };
 
   return (
