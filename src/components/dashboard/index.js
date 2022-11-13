@@ -5,6 +5,7 @@ import { useProfile } from "../../context/profile.context";
 import { database } from "../../misc/firebase.config";
 import { getUserUpdates } from "../../misc/helpers";
 import EditableInput from "../EditableInput";
+import ProviderBlock from "./ProviderBlock";
 
 const Dashboard = ({ onSignOut }) => {
   const { profile } = useProfile();
@@ -43,6 +44,7 @@ const Dashboard = ({ onSignOut }) => {
       <Drawer.Body>
         <div style={{ height: "90%" }}>
           <h3>Hey, {profile.name}</h3>
+          <ProviderBlock />
           <Divider />
           <EditableInput
             name="nickname"
