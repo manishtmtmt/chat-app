@@ -75,7 +75,7 @@ const CreateRoomBtnModal = () => {
   return (
     <div className="mt-1">
       <Button block color="green" appearance="primary" onClick={open}>
-        <CreativeIcon /> Creae new chat room
+        <CreativeIcon /> Create new chat room
       </Button>
 
       <Modal open={isOpen} onClose={close}>
