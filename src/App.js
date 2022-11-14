@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router";
+import { Switch } from "react-router";
 import "rsuite/dist/rsuite.min.css";
 
 import PrivateRoute from "./components/PrivateRoute";
@@ -12,24 +12,15 @@ import "./styles/main.scss";
 function App() {
   return (
     <ProfileProvider>
-      <Routes>
-        <Route
-          path="/signin"
-          element={
-            <PublicRoute>
-              <SignIn />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+      <Switch>
+        <PublicRoute path="/signin">
+          <SignIn />
+        </PublicRoute>
+
+        <PrivateRoute path="/">
+          <Home />
+        </PrivateRoute>
+      </Switch>
     </ProfileProvider>
   );
 }
