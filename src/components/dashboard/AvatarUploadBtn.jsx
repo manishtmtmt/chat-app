@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, Message, Modal, toaster } from "rsuite";
-import { useModalState } from "../../misc/custom-hooks";
 import AvatarEditor from "react-avatar-editor";
+import { useModalState } from "../../misc/custom-hooks";
 import { useProfile } from "../../context/profile.context";
 import {
   ref as storageRef,
