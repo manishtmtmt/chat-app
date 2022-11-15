@@ -8,13 +8,7 @@ import {
   set,
 } from "firebase/database";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  auth,
-  database,
-  messaging,
-  fcmVapidKey,
-} from "../misc/firebase.config";
-import { getToken } from "firebase/messaging";
+import { auth, database } from "../misc/firebase.config";
 
 export const isOfflineForDatabase = {
   state: "offline",
@@ -31,7 +25,6 @@ const ProfileContext = createContext();
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // console.log(profile)
 
   useEffect(() => {
     let userRef;
@@ -68,22 +61,6 @@ export const ProfileProvider = ({ children }) => {
               set(userStatusRef, isOnlineForDatabase);
             });
         });
-
-        // if (messaging) {
-        //   try {
-        //     const currentToken = await getToken(messaging, {
-        //       vapidKey: fcmVapidKey,
-        //     });
-        //     if (currentToken) {
-        //       await set(
-        //         ref(database, `/fcm_tokens/${currentToken}`),
-        //         authObj.uid
-        //       );
-        //     }
-        //   } catch (err) {
-        //     console.log("An error occurred while retrieving token. ", err);
-        //   }
-        // }
       } else {
         if (userRef) {
           off(userRef);
