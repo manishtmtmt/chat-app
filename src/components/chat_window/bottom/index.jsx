@@ -5,6 +5,7 @@ import { serverTimestamp, ref, push, update } from "firebase/database";
 import { useParams } from "react-router";
 import { useProfile } from "../../../context/profile.context";
 import { database } from "../../../misc/firebase.config";
+import AttchmentBtnModal from "./AttchmentBtnModal";
 
 function assembleMessage(profile, chatId) {
   return {
@@ -71,9 +72,47 @@ const ChatBottom = () => {
     }
   };
 
+  const afterUpload = useCallback(
+    async (files) => {
+      setIsLoading(true);
+
+      const updates = {};
+
+      files.forEach((file) => {
+        const msgData = assembleMessage(profile, chatId);
+        msgData.file = file;
+
+        const messageId = push(ref(database, "messages")).key;
+
+        updates[`/messages/${messageId}`] = msgData;
+      });
+
+      const lastMsgId = Object.keys(updates).pop();
+
+      updates[`/rooms/${chatId}/lastMessage`] = {
+        ...updates[lastMsgId],
+        msgId: lastMsgId,
+      };
+
+      try {
+        await update(ref(database), updates);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        toaster.push(
+          <Message type="error" closable duration={4000}>
+            {err.message}
+          </Message>
+        );
+      }
+    },
+    [profile, chatId]
+  );
+
   return (
     <div>
       <InputGroup>
+        <AttchmentBtnModal afterUpload={afterUpload} />
         <Input
           placeholder="Write a new message here..."
           value={input}
