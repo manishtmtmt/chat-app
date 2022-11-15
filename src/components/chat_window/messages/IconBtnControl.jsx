@@ -33,7 +33,16 @@ const IconBtnControl = ({
             onClick={onClick}
             circle
             size="xs"
-            icon={<i className="fa-solid fa-heart"></i>}
+            icon={
+              iconName === "heart" ? (
+                <i
+                  style={{ color: props.color }}
+                  className="fa-solid fa-heart"
+                ></i>
+              ) : (
+                <i className="fa-solid fa-trash-can"></i>
+              )
+            }
           />
         </Whisper>
       </ConditionalBadge>
