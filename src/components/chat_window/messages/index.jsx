@@ -63,7 +63,7 @@ const Messages = () => {
         {alertMsg}
       </Message>
      )
-  }, [])
+  }, [chatId])
 
   return (
     <ul ref={selfRef} className="msg-list custom-scroll">
