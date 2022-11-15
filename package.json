@@ -17,6 +17,7 @@
     "rsuite": "^5.22.1",
     "sass": "^1.56.1",
     "timeago-react": "^3.0.5",
+    "use-context-selector": "^1.4.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
