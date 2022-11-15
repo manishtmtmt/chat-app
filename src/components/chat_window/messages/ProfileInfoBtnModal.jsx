@@ -17,7 +17,7 @@ const ProfileInfoBtnModal = ({ profile, children, ...btnProps }) => {
       <Button {...btnProps} onClick={open}>
         {shortName}
       </Button>
-      <Modal show={isOpen} onHide={close}>
+      <Modal open={isOpen} onClose={close}>
         <Modal.Header>
           <Modal.Title>{shortName} profile</Modal.Title>
         </Modal.Header>
