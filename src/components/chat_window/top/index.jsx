@@ -13,7 +13,7 @@ const ChatTop = () => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <h4>
+        <h4 className="text-disappear d-flex align-items-center">
           <Link to={"/"} className="link-unstyled">
             <ArowBackIcon
               className={isMobile ? "d-inline-block p-0 mr-2 text-blue" : "d-none"}
