@@ -3,9 +3,10 @@ import { InputGroup, Message, toaster } from "rsuite";
 import { ReactMic } from "react-mic";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../misc/firebase.config";
+import { useParams } from "react-router";
 
 const AudioMsgBtn = ({ afterUpload }) => {
-  const { chatId } = window;
+  const { chatId } = useParams();
 
   const [isRecording, setIsRecording] = useState(false);
   const [isUploading, setIsUploading] = useState(false);

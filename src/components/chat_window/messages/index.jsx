@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "react-router";
+import { Button, Message, toaster } from "rsuite";
 import {
   ref as dbRef,
   off,
@@ -9,36 +10,85 @@ import {
   equalTo,
   runTransaction,
   update,
+  limitToLast,
 } from "firebase/database";
 import { deleteObject, ref as storageRef } from "firebase/storage";
 import { auth, database, storage } from "../../../misc/firebase.config";
-import { transformToArrWithId } from "../../../misc/helpers";
+import { groupBy, transformToArrWithId } from "../../../misc/helpers";
 import MessageItem from "./MessageItem";
-import { Message, toaster } from "rsuite";
+
+const PAGE_SIZE = 15;
+const messagesRef = dbRef(database, "/messages");
+
+function shouldScrollToBottom(node, threshold = 30) {
+  const percentage =
+    (100 * node.scrollTop) / (node.scrollHeight - node.clientHeight) || 0;
+
+  return percentage > threshold;
+}
 
 const Messages = () => {
   const { chatId } = useParams();
   const [messages, setMessages] = useState(null);
+  const [limit, setLimit] = useState(PAGE_SIZE);
   const selfRef = useRef();
 
   const isChatEmpty = messages && messages.length === 0;
   const canShowMessages = messages && messages.length > 0;
 
-  useEffect(() => {
-    const messagesRef = dbRef(database, "/messages");
+  const loadMessages = useCallback(
+    (limitToUse) => {
+      const node = selfRef.current;
 
-    onValue(
-      query(messagesRef, orderByChild("roomId"), equalTo(chatId)),
-      (snap) => {
-        const data = transformToArrWithId(snap.val());
-        setMessages(data);
-      }
-    );
+      off(messagesRef);
+
+      onValue(
+        query(
+          messagesRef,
+          orderByChild("roomId"),
+          equalTo(chatId),
+          limitToLast(limitToUse || PAGE_SIZE)
+        ),
+        (snap) => {
+          const data = transformToArrWithId(snap.val());
+          setMessages(data);
+
+          if (shouldScrollToBottom(node)) {
+            node.scrollTop = node.scrollHeight;
+          }
+        }
+      );
+
+      setLimit((p) => p + PAGE_SIZE);
+    },
+    [chatId]
+  );
+
+  const onLoadMore = useCallback(() => {
+    const node = selfRef.current;
+    const oldHeight = node.scrollHeight;
+
+    loadMessages(limit);
+
+    setTimeout(() => {
+      const newHeight = node.scrollHeight;
+      node.scrollTop = newHeight - oldHeight;
+    }, 200);
+  }, [loadMessages, limit]);
+
+  useEffect(() => {
+    const node = selfRef.current;
+
+    loadMessages();
+
+    setTimeout(() => {
+      node.scrollTop = node.scrollHeight;
+    }, 200);
 
     return () => {
       off(messagesRef);
     };
-  }, [chatId]);
+  }, [loadMessages]);
 
   const handleAdmin = useCallback(
     async (uid) => {
@@ -159,19 +209,47 @@ const Messages = () => {
     [chatId, messages]
   );
 
+  const renderMessages = () => {
+    const groups = groupBy(messages, (item) =>
+      new Date(item.createdAt).toDateString()
+    );
+
+    const items = [];
+
+    Object.keys(groups).forEach((date) => {
+      items.push(
+        <li key={date} className="text-center mb-1 padded">
+          {date}
+        </li>
+      );
+
+      const msgs = groups[date].map((msg) => (
+        <MessageItem
+          key={msg.id}
+          message={msg}
+          handleAdmin={handleAdmin}
+          handleLike={handleLike}
+          handleDelete={handleDelete}
+        />
+      ));
+
+      items.push(...msgs);
+    });
+
+    return items;
+  };
+
   return (
     <ul ref={selfRef} className="msg-list custom-scroll">
+      {messages && messages.length >= PAGE_SIZE && (
+        <li className="text-center mt-2 mb-2">
+          <Button onClick={onLoadMore} color="green">
+            Load more
+          </Button>
+        </li>
+      )}
       {isChatEmpty && <li>No messages yet</li>}
-      {canShowMessages &&
-        messages.map((msg) => (
-          <MessageItem
-            key={msg.id}
-            message={msg}
-            handleAdmin={handleAdmin}
-            handleLike={handleLike}
-            handleDelete={handleDelete}
-          />
-        ))}
+      {canShowMessages && renderMessages()}
     </ul>
   );
 };
