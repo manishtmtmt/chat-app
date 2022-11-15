@@ -69,21 +69,21 @@ export const ProfileProvider = ({ children }) => {
             });
         });
 
-        if (messaging) {
-          try {
-            const currentToken = await getToken(messaging, {
-              vapidKey: fcmVapidKey,
-            });
-            if (currentToken) {
-              await set(
-                ref(database, `/fcm_tokens/${currentToken}`),
-                authObj.uid
-              );
-            }
-          } catch (err) {
-            console.log("An error occurred while retrieving token. ", err);
-          }
-        }
+        // if (messaging) {
+        //   try {
+        //     const currentToken = await getToken(messaging, {
+        //       vapidKey: fcmVapidKey,
+        //     });
+        //     if (currentToken) {
+        //       await set(
+        //         ref(database, `/fcm_tokens/${currentToken}`),
+        //         authObj.uid
+        //       );
+        //     }
+        //   } catch (err) {
+        //     console.log("An error occurred while retrieving token. ", err);
+        //   }
+        // }
       } else {
         if (userRef) {
           off(userRef);
