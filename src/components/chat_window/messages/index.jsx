@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "react-router";
 import {
   ref as dbRef,
@@ -7,10 +7,12 @@ import {
   query,
   orderByChild,
   equalTo,
+  runTransaction,
 } from "firebase/database";
 import { database } from "../../../misc/firebase.config";
 import { transformToArrWithId } from "../../../misc/helpers";
 import MessageItem from "./MessageItem";
+import { Message, toaster } from "rsuite";
 
 const Messages = () => {
   const { chatId } = useParams();
@@ -40,10 +42,33 @@ const Messages = () => {
       }
   }, [chatId]);
 
+  const handleAdmin = useCallback(async (uid) => {
+     let alertMsg;
+
+     await runTransaction(dbRef(database, `/rooms/${chatId}/admins`), admins => {
+      if(admins) {
+        if(admins[uid]) {
+          admins[uid] = null;
+          alertMsg = 'Admin permission removed'
+        } else {
+          admins[uid] = true;
+          alertMsg = "Admin permission granted"
+        }
+      }
+      return admins;
+     })
+
+     toaster.push(
+      <Message type="info" closable duration={4000}>
+        {alertMsg}
+      </Message>
+     )
+  }, [])
+
   return (
     <ul ref={selfRef} className="msg-list custom-scroll">
       {isChatEmpty && <li>No messages yet</li>}
-      {canShowMessages && messages.map(msg => <MessageItem key={msg.id} message={msg} />)}
+      {canShowMessages && messages.map(msg => <MessageItem key={msg.id} message={msg} handleAdmin={handleAdmin} />)}
     </ul>
   );
 };
