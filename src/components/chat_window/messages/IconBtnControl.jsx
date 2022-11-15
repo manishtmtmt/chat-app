@@ -1,4 +1,4 @@
-import { Icon } from "@rsuite/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Badge, Whisper, Tooltip, IconButton } from "rsuite";
 
@@ -33,7 +33,7 @@ const IconBtnControl = ({
             onClick={onClick}
             circle
             size="xs"
-            icon={<Icon icon={iconName} />}
+            icon={<i className="fa-solid fa-heart"></i>}
           />
         </Whisper>
       </ConditionalBadge>

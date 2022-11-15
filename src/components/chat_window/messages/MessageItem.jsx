@@ -6,6 +6,7 @@ import { useHover, useMediaQuery } from "../../../misc/custom-hooks";
 import { auth } from "../../../misc/firebase.config";
 import PresenceDot from "../../PresenceDot";
 import ProfileAvatar from "../../ProfileAvatar";
+import IconBtnControl from "./IconBtnControl";
 import ProfileInfoBtnModal from "./ProfileInfoBtnModal";
 
 const MessageItem = ({ message, handleAdmin }) => {
@@ -37,7 +38,7 @@ const MessageItem = ({ message, handleAdmin }) => {
           className="ml-1"
           size="xs"
         />
-        
+
         <ProfileInfoBtnModal
           profile={author}
           appearance="link"
@@ -60,6 +61,15 @@ const MessageItem = ({ message, handleAdmin }) => {
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
         />
+
+        <IconBtnControl
+          {...(true ? { color: 'red' } : {})}
+          isVisible={canShowIcons}
+          iconName="heart"
+          tooltip="Like this message"
+          onClick={() => {}}
+          badgeContent={5}
+         />
       </div>
 
       <div>{text && <span className="word-break-all">{text}</span>}</div>
