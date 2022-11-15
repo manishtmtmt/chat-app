@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { database } from './firebase.config';
+import { off, onValue, ref } from 'firebase/database';
 
 export function useModalState(defaultValue = false) {
   const [isOpen, setIsOpen] = useState(defaultValue);
@@ -26,3 +28,52 @@ export const useMediaQuery = (query) => {
 
   return matches;
 };
+
+export function usePresence(uid) {
+  const [presence, setPresence] = useState(null);
+
+  useEffect(() => {
+    const userStatusRef = ref(database, `/status/${uid}`);
+
+    onValue(userStatusRef, snap => {
+      if (snap.exists()) {
+        const data = snap.val();
+
+        setPresence(data);
+      }
+    });
+
+    return () => {
+      off(userStatusRef);
+    };
+  }, [uid]);
+
+  return presence;
+}
+
+export function useHover() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const elementRef = useRef(null);
+
+  const handleMouseOver = () => setIsHovered(true);
+  const handleMouseOut = () => setIsHovered(false);
+
+  useEffect(
+    () => {
+      const node = elementRef.current;
+      if (node) {
+        node.addEventListener('mouseover', handleMouseOver);
+        node.addEventListener('mouseout', handleMouseOut);
+      }
+      return () => {
+        node.removeEventListener('mouseover', handleMouseOver);
+        node.removeEventListener('mouseout', handleMouseOut);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [elementRef.current] // Recall only if ref changes
+  );
+
+  return [elementRef, isHovered];
+}
