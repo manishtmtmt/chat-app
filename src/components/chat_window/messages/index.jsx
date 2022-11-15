@@ -243,7 +243,7 @@ const Messages = () => {
     <ul ref={selfRef} className="msg-list custom-scroll">
       {messages && messages.length >= PAGE_SIZE && (
         <li className="text-center mt-2 mb-2">
-          <Button onClick={onLoadMore} color="green">
+          <Button onClick={onLoadMore} color="green" appearance="primary">
             Load more
           </Button>
         </li>
