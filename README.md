@@ -1,4 +1,4 @@
-# Rect + Firebase Chat App
+# React + Firebase Chat App
 
 This project is built with React and Firebase [Chat App](https://chat-app-15798.web.app/).
 
@@ -22,6 +22,8 @@ Chat app is a real-time chat application where user can do group chatting. User 
 - Use context selector (v1.4.1)
 
 - For storing messages I have used firebase storage and firebase real-time database
+
+- Deployed on firebase hoisting
 
 ## Features/Functionality
 
@@ -65,5 +67,7 @@ Chat app is a real-time chat application where user can do group chatting. User 
 ![chat-page](https://user-images.githubusercontent.com/46663132/202083172-3ed644aa-ebdf-428f-9dd4-8c865fe640e6.png)
 
 *If you liked my project feel free give it a star*
+
 *Thank you*
+
 *Manish Tiwari*
