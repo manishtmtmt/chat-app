@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Rect + Firebase Chat App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is built with React and Firebase [Chat App](https://chat-app-15798.web.app/).
 
-## Available Scripts
+Chat app is a real-time chat application where user can do group chatting. User can send messages to each other, share images, documents, and audio file as well upto 5MB. App supported facebook and google authentication that means user and signin with facebook or google as per user's preferences. User can see other user's information such as profile and last online status. User can create his own chat room or he can join any chat room that are available and do group chatting. So go to Chat App and enjoy chatting with people.
 
-In the project directory, you can run:
+## Languages used
 
-### `npm start`
+- HTML
+- CSS
+- JavaScript
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tools/Library used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React (v18.2.0)
+- React router (v5.2.0)
+- Firebase (v9.14.0)
+- Rsuite (v5.22.1)
+- Sass (v1.56.1)
+- React mic (v12.4.6)
+- Timeage react (v3.0.5)
+- Use context selector (v1.4.1)
 
-### `npm test`
+- For storing messages I have used firebase storage and firebase real-time database
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features/Functionality
 
-### `npm run build`
+- Fully responsive app
+- User authentication with Facebook/Google (Signin with Facebook/Google)
+- Manage user profile (edit username, upload avatar)
+- Create chat room
+- Update chat room information
+- Realtime chat message
+- Send chat, like chat and delete own chat
+- Send file (images, documents, audio) upto 5mb
+- Oraganized chat date wise
+- Display chat send time
+- View user status (like if user is online or offlinne and last online time)
+- View user information
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Author
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Manish Tiwari](https://linkedin.com/in/wdmanisht)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Screenshots
 
-### `npm run eject`
+### Signin page
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![Login-page](https://user-images.githubusercontent.com/46663132/202082943-0ea8cbfe-e3d4-4dbf-adb0-80e8156fe3f8.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Google signin modal
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![google-login](https://user-images.githubusercontent.com/46663132/202083059-95cbd0a1-67ff-460f-8967-0d903465d659.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Home
 
-## Learn More
+![home](https://user-images.githubusercontent.com/46663132/202083004-c7cc39fa-09f9-4556-990c-2d8b265f4adc.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Dashboard
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![dashboard](https://user-images.githubusercontent.com/46663132/202083135-6d23036c-ab73-4791-97ed-c653f2347847.png)
 
-### Code Splitting
+### Chat
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![chat-page](https://user-images.githubusercontent.com/46663132/202083172-3ed644aa-ebdf-428f-9dd4-8c865fe640e6.png)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*If you liked my project feel free give it a star*
+*Thank you*
+*Manish Tiwari*
